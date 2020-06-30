@@ -21,28 +21,20 @@ def add_song(song)
     self.songs << song
 end
 
-def self.find_or_create_by_name(name)
-    if self.find(name)
-      self.find(name)
-    else
-      self.create(name)
-    end
+  def self.find_or_create_by_name(name)
+    self.find(name) ? self.find(name) : self.new(name)
   end
-  
-    def self.find(name)    
-    self.all.detect { 
-      |artist| artist.name == name
-      }
+
+  def self.find(name)
+    self.all.find {|artist| artist.name == name }
   end
-  
-   def self.create(name)
-    artist = Artist.new(name)
-    artist.save
-    artist
+
+  def save
+    @@all << self
   end
-  
+
   def print_songs
-    self.songs.each {|song| song.name}
+    songs.each {|song| puts song.name}
   end
 
 end
